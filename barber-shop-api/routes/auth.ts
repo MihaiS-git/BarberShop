@@ -13,8 +13,6 @@ router.put("/signup",
             .isEmail()
             .withMessage('Please enter a valid email.')
             .custom((value, { req }) => {
-                console.log("Request body: ", req.body);
-
                 return User.findOne({ email: value })
                     .then(userDoc => {
                         if (userDoc) {

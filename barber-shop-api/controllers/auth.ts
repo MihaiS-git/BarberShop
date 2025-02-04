@@ -14,8 +14,6 @@ class AuthController {
 
     static async signup(req: Request, res: Response, next: NextFunction) {
         const errors = validationResult(req);
-        console.log("Errors: ", errors);
-        
         if (!errors.isEmpty()) {
             const error = new CustomError('Validation failed.', 422, errors.array());
             return next(error);
@@ -24,7 +22,10 @@ class AuthController {
         const password = req.body.password;
         const name = req.body.name;
         const role = Role.CUSTOMER;
-        const dob = req.body.dob;
+        
+        const dobString = req.body.dob;
+        const [day, month, year] = dobString.split('/').map(Number);
+        const dob = new Date(Date.UTC(year, month-1, day, 0,0,0));
 
         try {
             const hashedPassword = await bcrypt.hash(password, 12);
