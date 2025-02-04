@@ -1,6 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
+import useAuth from "../contexts/useAuth";
 import MenuElement from "./MenuElement";
 
 const MainNavigation = () => {
+    const { authState, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
+
     return (
         <nav className="hidden xl:block w-full bg-yellow-200 p-2">
             <ul className="flex flex-row justify-around items-center w-full h-full">
@@ -34,11 +45,21 @@ const MainNavigation = () => {
                     className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
                     target="/contact"
                 />
-                <MenuElement
-                    name="Authentication"
+
+                {authState.isAuthenticated ? (
+                    <button
+                        className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                        onClick={handleLogout}
+                    >
+                        Logout
+                    </button>
+                ) : (
+                    <MenuElement
+                    name="Authenticate"
                     className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
-                    target="/auth"
-                />
+                    target="/login"
+                    />  
+                )}
             </ul>
         </nav>
     );

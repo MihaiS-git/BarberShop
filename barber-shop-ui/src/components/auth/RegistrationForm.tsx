@@ -124,7 +124,7 @@ const RegistrationForm = () => {
             email: email,
             password: password,
             name: name,
-            dob: dob,
+            dob: dob.toLocaleDateString('en-GB'),
         };
         console.log(requestBody);
 

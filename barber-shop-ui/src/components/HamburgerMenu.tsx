@@ -1,6 +1,17 @@
+import { useNavigate } from "react-router-dom";
+
+import useAuth from "../contexts/useAuth";
 import MenuElement from "./MenuElement";
 
-const HamburgerMenu: React.FC<{ openState: boolean, handleClose: () => void }> = ({ openState, handleClose }) => {
+const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = ({ openState, handleClose }) => {
+    const { authState, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+        handleClose();
+    };
 
     return (
         <>
@@ -44,15 +55,29 @@ const HamburgerMenu: React.FC<{ openState: boolean, handleClose: () => void }> =
                         target="/contact"
                         onClick={handleClose}
                     />
-                    <MenuElement
-                        name="Authentication"
-                        className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
-                        target="/auth"
-                        onClick={handleClose}
-                    />
+                    {authState.isAuthenticated ? (
+                        <button
+                            className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <MenuElement
+                            name="Authenticate"
+                            className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                            target="/login"
+                            onClick={handleClose}
+                        />
+                    )}
                 </ul>
                 <div className="flex justify-end align-bottom">
-                    <button onClick={handleClose} className="ps-2 pe-2 rounded-md text-xl text-yellow-400 font-bold bg-yellow-950">X</button>
+                    <button
+                        onClick={handleClose}
+                        className="ps-2 pe-2 rounded-md text-xl text-yellow-400 font-bold bg-yellow-950"
+                    >
+                        X
+                    </button>
                 </div>
             </div>
         </>
