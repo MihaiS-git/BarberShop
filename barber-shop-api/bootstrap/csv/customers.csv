@@ -1,0 +1,5 @@
+﻿email,password,name,role,dob
+customer1@test.com,password123,Billy Willy,customer,5/13/1966
+customer2@test.com,password123,Sam Wonka,customer,7/15/1999
+customer3@test.com,password123,Jim Carrelly,customer,12/12/2002
+customer4@test.com,password123,Tim Porter,customer,8/24/1995

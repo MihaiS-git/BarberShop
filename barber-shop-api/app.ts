@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 
 import authRoutes from './routes/auth';
 import treatmentsRoutes from './routes/treatments';
+import seedData from './scripts/seed';
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 const PORT = process.env.PORT;;
@@ -35,7 +36,9 @@ app.use((error: any, req: any, res: any, next: any) => {
 });
 
 mongoose.connect(MONGODB_URI)
-    .then(() => {
+    .then(async () => {
+        console.log("Connected to MongoDB...");
+        await seedData();
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });

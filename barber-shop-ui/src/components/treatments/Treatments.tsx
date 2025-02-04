@@ -13,8 +13,8 @@ const Treatments: React.FC = () => {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="flex flex-col justify-around align-middle text-center mt-150 p-64 font-medium font-serif  text-yellow-950 text-2xl sm:text-3xl">
-            <div className="bg-yellow-500 bg-opacity-60 rounded-3xl mb-10 w-64 sm:w-96 mx-auto">
+        <div className="flex flex-col justify-around align-middle text-center font-medium font-serif  text-yellow-950 text-2xl sm:text-3xl">
+            <div className="bg-yellow-500 bg-opacity-60 mb-10 w-64 sm:w-96 mx-auto">
                 <h2>Treatments</h2>
             </div>
             <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">

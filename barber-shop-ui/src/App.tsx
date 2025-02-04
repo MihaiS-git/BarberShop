@@ -35,7 +35,8 @@ const router = createBrowserRouter([
       {
         path: 'treatments',
         element: <TreatmentsPage />
-      }
+      },
+      //TODO reset password
 
     ]
   }]);
