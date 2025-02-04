@@ -2,7 +2,7 @@ import { Form, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import FormInputElement from "./FormInputElement";
-import useAuth from "../../contexts/useAuth";
+import useAuth from "../../contexts/auth/useAuth";
 
 const BASE_URL = "http://localhost:8080";
 

@@ -2,7 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+
 import authRoutes from './routes/auth';
+import treatmentsRoutes from './routes/treatments';
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 const PORT = process.env.PORT;;
@@ -23,6 +25,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/auth', authRoutes);
+app.use(treatmentsRoutes);
 
 app.use((error: any, req: any, res: any, next: any) => {
     const status = error.statusCode || 500;

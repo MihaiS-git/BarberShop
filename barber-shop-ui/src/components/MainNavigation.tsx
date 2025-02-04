@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import useAuth from "../contexts/useAuth";
+import useAuth from "../contexts/auth/useAuth";
 import MenuElement from "./MenuElement";
 
 const MainNavigation = () => {

@@ -5,6 +5,7 @@ import RootLayout from "./components/Root";
 import AuthenticationPage from "./pages/Authentication";
 import RegistrationPage from "./pages/Registration";
 import RecoverPasswordPage from "./pages/RecoverPassword";
+import TreatmentsPage from "./pages/Treatments";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: 'recover-password',
         element: <RecoverPasswordPage />
+      },
+      {
+        path: 'treatments',
+        element: <TreatmentsPage />
       }
 
     ]
