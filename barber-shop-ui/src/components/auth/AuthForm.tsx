@@ -56,30 +56,10 @@ const AuthForm = () => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        let formIsValid = true;
-        const newErrors: { field: string; message: string }[] = [];
-
-        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-        if (!emailRegex.test(email)) {
-            newErrors.push({
-                field: "email",
-                message: "Invalid email address.",
-            });
-            formIsValid = false;
-        }
-
-        if (password.trim().length < 8) {
-            newErrors.push({
-                field: "password",
-                message: "Password must be at least 8 characters long.",
-            });
-            formIsValid = false;
-        }
-
-        if (!formIsValid) {
-            setErrors(newErrors);
-            return;
-        }
+        const requestBody = {
+            email: email,
+            password: password
+        };
 
         try {
             const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -87,7 +67,7 @@ const AuthForm = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ email, password }),
+                body: JSON.stringify(requestBody),
             });
             const data = await response.json();
             if (!response.ok) {
