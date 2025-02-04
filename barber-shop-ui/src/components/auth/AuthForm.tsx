@@ -16,17 +16,41 @@ const AuthForm = () => {
     const navigate = useNavigate();
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setEmail(e.target.value);
-        setErrors((prevErrors) =>
-            prevErrors.filter((error) => error.field !== "email")
-        );
+        const emailInput = e.target.value;
+        setEmail(emailInput);
+        const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        setErrors((prevErrors) => {
+            const filteredErrors = prevErrors.filter(
+                (error) => error.field !== "email"
+            );
+            if (!emailRegex.test(email)) {
+                return [
+                    ...filteredErrors,
+                    { field: "email", message: "Invalid email address." },
+                ];
+            }
+            return filteredErrors;
+        });
     };
 
     const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(e.target.value);
-        setErrors((prevErrors) =>
-            prevErrors.filter((error) => error.field !== "password")
-        );
+        const password = e.target.value;
+        setPassword(password);
+        setErrors((prevErrors) => {
+            const filteredErrors = prevErrors.filter(
+                (error) => error.field !== "password"
+            );
+            if (password.trim().length < 8) {
+                return [
+                    ...filteredErrors,
+                    {
+                        field: "password",
+                        message: "Password must be at least 8 characters long.",
+                    },
+                ];
+            }
+            return filteredErrors;
+        });
     };
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -109,6 +133,9 @@ const AuthForm = () => {
             {errors.length > 0 && (
                 <div className="text-red-500 text-sm text-center">
                     <p>Please correct the errors below:</p>
+                    {errors.map((e) => {
+                        return <p>{e.message}</p>;
+                    })}
                 </div>
             )}
 

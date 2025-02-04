@@ -16,7 +16,7 @@ const RegistrationForm = () => {
         []
     );
     const navigate = useNavigate();
-
+    
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const emailInput = e.target.value;
         setEmail(emailInput);
@@ -110,6 +110,15 @@ const RegistrationForm = () => {
                     {
                         field: "dob",
                         message: "You must be at least 18 years old.",
+                    },
+                ];
+            }
+            if(dateOfBirth < new Date('01/01/1900')){
+                return [
+                    ...filteredErrors,
+                    {
+                        field: "dob",
+                        message: "Year is not valid.",
                     },
                 ];
             }
@@ -265,7 +274,8 @@ const RegistrationForm = () => {
             <p className="p-2 flex justify-center my-4">
                 <button
                     type="submit"
-                    className="bg-yellow-950 text-yellow-400 hover:bg-yellow-400 hover:text-yellow-950 py-2 px-16 rounded-md"
+                    className="bg-yellow-950 text-yellow-400 hover:bg-yellow-400 hover:text-yellow-950 py-2 px-16 rounded-md disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed"
+                    disabled={errors.length === 0 ? false : true}
                 >
                     Signup
                 </button>
