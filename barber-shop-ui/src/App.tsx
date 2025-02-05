@@ -9,52 +9,56 @@ import TreatmentsPage from "./pages/Treatments";
 import BarbersPage from "./pages/Barbers";
 import BarberTreatmentsPage from "./pages/BarberTreatments";
 import ContactPage from "./pages/Contact";
+import NewPasswordPage from "./pages/NewPassword";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />
-      },
-      {
-        path: 'home',
-        element: <HomePage />
-      },
-      {
-        path: 'login',
-        element: <AuthenticationPage />
-      },
-      {
-        path: 'register',
-        element: <RegistrationPage />
-      },
-      {
-        path: 'recover-password',
-        element: <RecoverPasswordPage />
-      },
-      {
-        path: 'treatments',
-        element: <TreatmentsPage />
-      },
-      {
-        path: 'treatments/:barberId',
-        element: <BarberTreatmentsPage />
-      },
-      {
-        path: 'barbers',
-        element: <BarbersPage />
-      },
-      {
-        path: 'contact',
-        element: <ContactPage />
-      },
-      //TODO reset password
-
-    ]
-  }]);
+    {
+        path: "/",
+        element: <RootLayout />,
+        children: [
+            {
+                index: true,
+                element: <HomePage />,
+            },
+            {
+                path: "home",
+                element: <HomePage />,
+            },
+            {
+                path: "login",
+                element: <AuthenticationPage />,
+            },
+            {
+                path: "register",
+                element: <RegistrationPage />,
+            },
+            {
+                path: "recover-password",
+                element: <RecoverPasswordPage />,
+            },
+            {
+                path: "recover-password/:token",
+                element: <NewPasswordPage />,
+            },
+            {
+                path: "treatments",
+                element: <TreatmentsPage />,
+            },
+            {
+                path: "treatments/:barberId",
+                element: <BarberTreatmentsPage />,
+            },
+            {
+                path: "barbers",
+                element: <BarbersPage />,
+            },
+            {
+                path: "contact",
+                element: <ContactPage />,
+            },
+        ],
+    },
+]);
 
 function App() {
     return <RouterProvider router={router} />;

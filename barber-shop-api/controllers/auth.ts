@@ -22,10 +22,10 @@ class AuthController {
         const password = req.body.password;
         const name = req.body.name;
         const role = Role.CUSTOMER;
-        
+
         const dobString = req.body.dob;
         const [day, month, year] = dobString.split('/').map(Number);
-        const dob = new Date(Date.UTC(year, month-1, day, 0,0,0));
+        const dob = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
 
         try {
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -74,7 +74,7 @@ class AuthController {
         }
     }
 
-    static async resetPassword(req: Request, res: Response, next: NextFunction) {
+    static async sendResetPasswordEmail(req: Request, res: Response, next: NextFunction) {
         try {
             const { email } = req.body;
             const user = await User.findOne({ email });
@@ -91,7 +91,8 @@ class AuthController {
             const token = buffer.toString('hex');
 
             user.resetToken = token;
-            user.resetTokenExpiration = Date.now() + 3600000;
+            user.resetTokenExpiration = Date.now() + 36000000;
+
             await user.save();
 
             await sendResetPasswordEmail(email, token);
@@ -101,6 +102,32 @@ class AuthController {
         }
     }
 
+    static async resetPassword(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { email, password, token } = req.body;
+
+            const user = await User.findOne({
+                email,
+                resetToken: token,
+                resetTokenExpiration: { $gt: Date.now() }
+            });
+
+            if (!user) {
+                return next(new CustomError('Invalid or expired token.', 400));
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 12);
+
+            user.password = hashedPassword;
+            user.resetToken = '';
+            user.resetTokenExpiration = 0;
+            const result = await user.save();
+
+            res.status(200).json({ message: 'Password has been reset successfully.' });
+        } catch (error: any) {
+            next(new CustomError(error.message || 'Failed to reset password.', error.status || 500));
+        }
+    }
 }
 
 export default AuthController;

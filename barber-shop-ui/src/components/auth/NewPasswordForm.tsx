@@ -1,4 +1,4 @@
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import FormInputElement from "./FormInputElement";
 
@@ -6,10 +6,14 @@ const BASE_URL = "http://localhost:8080";
 
 const RecoverPasswordForm = () => {
     const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
     const [errors, setErrors] = useState<{ field: string; message: string }[]>(
         []
     );
     const navigate = useNavigate();
+
+    const {token} = useParams();
 
     const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const email = event.target.value;
@@ -29,15 +33,59 @@ const RecoverPasswordForm = () => {
         });
     };
 
+    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const password = e.target.value;
+        setPassword(password);
+        setErrors((prevErrors) => {
+            const filteredErrors = prevErrors.filter(
+                (error) => error.field !== "password"
+            );
+            if (password.trim().length < 8) {
+                return [
+                    ...filteredErrors,
+                    {
+                        field: "password",
+                        message: "Password must be at least 8 characters long.",
+                    },
+                ];
+            }
+            return filteredErrors;
+        });
+    };
+
+    const handleConfirmPasswordChange = (
+        e: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        const confirmPassword = e.target.value;
+        setConfirmPassword(confirmPassword);
+        setErrors((prevErrors) => {
+            const filteredErrors = prevErrors.filter(
+                (error) => error.field !== "confirmPassword"
+            );
+            if (password !== confirmPassword) {
+                return [
+                    ...filteredErrors,
+                    {
+                        field: "confirmPassword",
+                        message: "Passwords do not match.",
+                    },
+                ];
+            }
+            return filteredErrors;
+        });
+    };
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const requestBody = {
-            email: email,
+            email,
+            password,
+            token
         };
 
         try {
-            const response = await fetch(`${BASE_URL}/auth/reset`, {
+            const response = await fetch(`${BASE_URL}/auth/reset-password`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,7 +105,7 @@ const RecoverPasswordForm = () => {
                 ]);
                 return;
             }
-            alert('Please verify your email!');
+            alert('Password changed successfully!');
             navigate("/login");
         } catch (error) {
             if (error instanceof Error) {
@@ -100,13 +148,53 @@ const RecoverPasswordForm = () => {
                 placeholder="Email"
                 onChange={handleEmailChange}
             />
+            {errors.some((error) => error.field === "email") && (
+                <p className="text-red-500 text-sm">
+                    {errors.find((error) => error.field === "email")?.message}
+                </p>
+            )}
+            <FormInputElement
+                type="password"
+                id="password"
+                name="password"
+                value={password}
+                placeholder="Password"
+                onChange={handlePasswordChange}
+                required={true}
+            />
+            {errors.some((error) => error.field === "password") && (
+                <p className="text-red-500 text-sm">
+                    {
+                        errors.find((error) => error.field === "password")
+                            ?.message
+                    }
+                </p>
+            )}
+            <FormInputElement
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                value={confirmPassword}
+                placeholder="Confirm Password"
+                onChange={handleConfirmPasswordChange}
+                required={true}
+            />
+            {errors.some((error) => error.field === "confirmPassword") && (
+                <p className="text-red-500 text-sm">
+                    {
+                        errors.find(
+                            (error) => error.field === "confirmPassword"
+                        )?.message
+                    }
+                </p>
+            )}
             <p className="p-2 flex justify-center my-4">
                 <button
                     type="submit"
                     className="bg-yellow-950 text-yellow-400 hover:bg-yellow-400 hover:text-yellow-950 py-2 px-16 disabled:bg-gray-300 disabled:text-gray-600 disabled:cursor-not-allowed"
                     disabled={errors.length === 0 ? false : true}
                 >
-                    Recover
+                    Save
                 </button>
             </p>
         </Form>

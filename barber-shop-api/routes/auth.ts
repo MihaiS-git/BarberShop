@@ -42,6 +42,7 @@ router.post('/login',
     ],
     AuthController.login);
 
-router.post('/reset', AuthController.resetPassword);
+router.post('/reset', AuthController.sendResetPasswordEmail);
+router.post('/reset-password', AuthController.resetPassword);
 
 export default router;
