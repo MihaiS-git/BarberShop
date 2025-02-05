@@ -17,7 +17,7 @@ export default function Map() {
                 />
                 <Marker position={[46.770439, 23.591423]}>
                     <Popup>
-                        A pretty CSS3 popup. <br /> Easily customizable.
+                        Barber Shop <br /> Cluj-Napoca
                     </Popup>
                 </Marker>
             </MapContainer>

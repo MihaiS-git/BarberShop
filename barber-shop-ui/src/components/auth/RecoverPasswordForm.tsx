@@ -85,8 +85,8 @@ const RecoverPasswordForm = () => {
             {errors.length > 0 && (
                 <div className="text-red-500 text-sm text-center">
                 <p>Please correct the errors below:</p>
-                {errors.map((e) => {
-                    return <p key={e.field}>{e.message}</p>;
+                {errors.map((e, index) => {
+                    return <p key={index}>{e.message}</p>;
                 })}
             </div>
             )}
