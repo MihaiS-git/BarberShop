@@ -25,21 +25,28 @@ const MainNavigation = () => {
                     className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
                     target="/barbers"
                 />
-                <MenuElement
-                    name="Appointments"
-                    className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
-                    target="/appointments"
-                />
-                <MenuElement
-                    name="Cart"
-                    className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
-                    target="/cart"
-                />
-                <MenuElement
-                    name="Account"
-                    className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
-                    target="/myAccount"
-                />
+                {authState.isAuthenticated && (
+                    <MenuElement
+                        name="Appointments"
+                        className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                        target="/appointments"
+                    />
+                )}
+                {authState.isAuthenticated && (
+                    <MenuElement
+                        name="Cart"
+                        className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                        target="/cart"
+                    />
+                )}
+                {authState.isAuthenticated && (
+                    <MenuElement
+                        name="Account"
+                        className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                        target="/myAccount"
+                    />
+                )}
+                
                 <MenuElement
                     name="Contact"
                     className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
@@ -55,10 +62,10 @@ const MainNavigation = () => {
                     </button>
                 ) : (
                     <MenuElement
-                    name="Authenticate"
-                    className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
-                    target="/login"
-                    />  
+                        name="Authenticate"
+                        className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
+                        target="/login"
+                    />
                 )}
             </ul>
         </nav>

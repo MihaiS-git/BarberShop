@@ -32,23 +32,29 @@ const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = 
                         target="/barbers"
                         onClick={handleClose}
                     />
-                    <MenuElement
-                        name="Appointments"
-                        className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
-                        target="/appointments"
-                    />
-                    <MenuElement
-                        name="Cart"
-                        className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
-                        target="/cart"
-                        onClick={handleClose}
-                    />
-                    <MenuElement
-                        name="Account"
-                        className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
-                        target="/myAccount"
-                        onClick={handleClose}
-                    />
+                    {authState.isAuthenticated && (
+                        <MenuElement
+                            name="Appointments"
+                            className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
+                            target="/appointments"
+                        />
+                    )}
+                    {authState.isAuthenticated && (
+                        <MenuElement
+                            name="Cart"
+                            className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
+                            target="/cart"
+                            onClick={handleClose}
+                        />
+                    )}
+                    {authState.isAuthenticated && (
+                        <MenuElement
+                            name="Account"
+                            className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
+                            target="/myAccount"
+                            onClick={handleClose}
+                        />
+                    )}
                     <MenuElement
                         name="Contact"
                         className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
