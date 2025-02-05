@@ -1,5 +1,5 @@
-﻿email,password,name,role,dob
-barber1@barbershop.com,password123,John Doe,barber,5/13/1980
-barber2@barbershop.com,password123,Jane Smith,barber,9/20/1985
-barber3@barbershop.com,password123,Bob Johnson,barber,12/10/1990
-barber4@barbershop.com,password123,Alice Williams,barber,3/5/1989
+﻿email,password,name,role,dob,pictureUrl
+barber1@barbershop.com,password123,John Doe,barber,5/13/1980,.\\barbers\\bs_barber_2.png
+barber2@barbershop.com,password123,Jane Smith,barber,9/20/1985,.\\barbers\\bs_barber_1.png
+barber3@barbershop.com,password123,Bob Johnson,barber,12/10/1990,.\\barbers\\bs_barber_3.png
+barber4@barbershop.com,password123,Allen Williams,barber,3/5/1989,.\\barbers\\bs_barber_4.png

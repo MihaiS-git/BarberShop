@@ -8,6 +8,7 @@ export interface IUser extends Document {
     name: string;
     role: Role;
     dob: Date;
+    pictureUrl: string;
     resetToken: string;
     resetTokenExpiration: number;
 };
@@ -34,6 +35,11 @@ const userSchema = new Schema<IUser>({
     dob: {
         type: Date,
         required: true
+    },
+    pictureUrl: {
+        type: String,
+        required: false,
+        default: '.\\barbers\\bs_user.png'
     },
     resetToken: {
         type: String,
