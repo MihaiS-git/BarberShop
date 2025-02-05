@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import mongoose, { Schema, model, Document, Types } from 'mongoose';
 import { Role } from './role';
 
 export interface IUser extends Document { 
@@ -9,6 +9,7 @@ export interface IUser extends Document {
     role: Role;
     dob: Date;
     pictureUrl: string;
+    treatmentIds?: Types.ObjectId[];
     resetToken: string;
     resetTokenExpiration: number;
 };
@@ -41,6 +42,12 @@ const userSchema = new Schema<IUser>({
         required: false,
         default: '.\\barbers\\bs_user.png'
     },
+    treatmentIds: [
+        {
+        type: Schema.Types.ObjectId,
+        ref: 'Treatment'
+        }
+    ],
     resetToken: {
         type: String,
         required: false,
@@ -53,5 +60,4 @@ const userSchema = new Schema<IUser>({
     }
 });
 
-const User = model<IUser>('User', userSchema);
-export default User;
+export default model<IUser>('User', userSchema);
