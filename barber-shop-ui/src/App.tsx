@@ -8,6 +8,7 @@ import RecoverPasswordPage from "./pages/RecoverPassword";
 import TreatmentsPage from "./pages/Treatments";
 import BarbersPage from "./pages/Barbers";
 import BarberTreatmentsPage from "./pages/BarberTreatments";
+import ContactPage from "./pages/Contact";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: 'barbers',
         element: <BarbersPage />
+      },
+      {
+        path: 'contact',
+        element: <ContactPage />
       },
       //TODO reset password
 
