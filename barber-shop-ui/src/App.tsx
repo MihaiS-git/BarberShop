@@ -6,6 +6,7 @@ import AuthenticationPage from "./pages/Authentication";
 import RegistrationPage from "./pages/Registration";
 import RecoverPasswordPage from "./pages/RecoverPassword";
 import TreatmentsPage from "./pages/Treatments";
+import BarbersPage from "./pages/Barbers";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'treatments',
         element: <TreatmentsPage />
+      },
+      {
+        path: 'barbers',
+        element: <BarbersPage />
       },
       //TODO reset password
 

@@ -9,7 +9,7 @@ export interface IUser extends Document {
     role: Role;
     dob: Date;
     resetToken: string;
-    resetTokenExpiration: number
+    resetTokenExpiration: number;
 };
 
 const userSchema = new Schema<IUser>({

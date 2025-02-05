@@ -56,6 +56,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
                 role: null,
             });
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const login = (userId: string, jwtToken: string, role: string) => {

@@ -1,5 +1,5 @@
 import useAuth from "../../contexts/auth/useAuth";
-import { Treatment } from "../../contexts/treatments/TreatmentTypes";
+import { Treatment } from "../../types/treatment";
 
 const TreatmentCard: React.FC<{ treatment: Treatment }> = ({ treatment }) => {
     const { authState } = useAuth();

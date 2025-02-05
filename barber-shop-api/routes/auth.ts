@@ -1,4 +1,4 @@
-import { NextFunction, Router } from "express";
+import { Router } from "express";
 import { body } from 'express-validator';
 
 import User from '../models/user';

@@ -21,9 +21,9 @@ const MainNavigation = () => {
                     target="/treatments"
                 />
                 <MenuElement
-                    name="Professionals"
+                    name="Barbers"
                     className="block w-full p-2 text-center text-xl font-bold text-yellow-900 hover:text-stone-950"
-                    target="/professionals"
+                    target="/barbers"
                 />
                 <MenuElement
                     name="Appointments"
