@@ -16,7 +16,7 @@ const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = 
     return (
         <>
             <div
-                className={`fixed top-0 left-1/2 transform -translate-x-1/2 w-full p-6 bg-yellow-200 rounded-md shadow-lg z-50 
+                className={`fixed top-0 left-1/2 transform -translate-x-1/2 w-full p-6 bg-yellow-200 shadow-lg z-50 
                     ${openState ? "block" : "hidden"}`}
             >
                 <ul className="flex flex-col justify-around items-center w-full h-full">
@@ -74,7 +74,7 @@ const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = 
                 <div className="flex justify-end align-bottom">
                     <button
                         onClick={handleClose}
-                        className="ps-2 pe-2 rounded-md text-xl text-yellow-400 font-bold bg-yellow-950"
+                        className="ps-2 pe-2 text-xl text-yellow-400 font-bold bg-yellow-950"
                     >
                         X
                     </button>
