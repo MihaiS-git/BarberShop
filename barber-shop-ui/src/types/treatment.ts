@@ -1,5 +1,5 @@
 export interface Treatment {
-    id?: string;
+    _id?: string;
     name: string;
     description: string;
     duration: number; // in minutes

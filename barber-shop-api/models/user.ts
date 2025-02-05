@@ -1,8 +1,8 @@
-import mongoose, { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types, ObjectId } from 'mongoose';
 import { Role } from './role';
 
 export interface IUser extends Document { 
-    id?: string;
+    _id: ObjectId;
     email: string;
     password: string;
     name: string;

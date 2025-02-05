@@ -2,7 +2,7 @@ import { Key } from "react";
 
 import { useBarbers } from "../../hooks/useBarbers";
 import { User } from "../../types/user";
-import UserCard from "./UserCard";
+import BarberCard from "./BarberCard";
 
 const Barbers = () => {
     const { data: barbers, isLoading, error } = useBarbers();
@@ -19,7 +19,7 @@ const Barbers = () => {
                 {barbers?.map((barber: User, index: Key | null | undefined) => {
                     return (
                         <li key={index}>
-                            <UserCard user={barber} />
+                            <BarberCard user={barber} />
                         </li>
                     );
                 })}

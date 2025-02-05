@@ -1,7 +1,7 @@
-import { Schema, model, Document, Types } from 'mongoose';
+import { Schema, model, Document, Types, ObjectId } from 'mongoose';
 
 export interface ITreatment extends Document{
-    id: string;
+    _id: ObjectId;
     name: string;
     description: string;
     duration: number; // in minutes

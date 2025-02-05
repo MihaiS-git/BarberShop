@@ -19,7 +19,7 @@ const TreatmentCard: React.FC<{ treatment: Treatment }> = ({ treatment }) => {
             onClick={handleAddToCart}
         >
             <img
-                src={treatment.pictureUrl}
+                src={`/${treatment.pictureUrl}`}
                 alt={treatment.name}
                 className="w-full h-124 object-cover rounded-t-lg"
             />

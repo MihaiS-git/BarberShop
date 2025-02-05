@@ -1,9 +1,20 @@
+import { useNavigate } from "react-router-dom";
+
 import { User } from "../../types/user";
 
-const UserCard: React.FC<{ user: User }> = ({ user }) => {
+const BarberCard: React.FC<{ user: User }> = ({ user }) => {
+    const navigate = useNavigate();
     const formattedDob = new Date(user.dob).toISOString().split('T')[0];
+
+    const handleClick = () => {
+        navigate(`/treatments/${user?._id!.toString()}`);
+    }
+
     return (
-        <div className="border border-slate-200 rounded-lg shadow-[2px_2px_6px] shadow-yellow-950 h-full text-clip bg-yellow-900 cursor-pointer">            
+        <div
+            className="border border-slate-200 rounded-lg shadow-[2px_2px_6px] shadow-yellow-950 h-full text-clip bg-yellow-900 cursor-pointer"
+            onClick={handleClick}
+        >            
             <img
                 src={user.pictureUrl}
                 alt={user.name}
@@ -20,4 +31,4 @@ const UserCard: React.FC<{ user: User }> = ({ user }) => {
     );
 }
 
-export default UserCard;
+export default BarberCard;
