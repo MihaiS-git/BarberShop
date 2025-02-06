@@ -1,18 +1,53 @@
-import ItemCard from "./ItemCard";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import useAuth from "../../contexts/auth/useAuth";
+
 import { CartItem } from "../../types/cartItem";
-import { formatPrice } from "../../utils/formatPrice";
+import ItemCard from "./ItemCard";
+
 import { clearCart } from "../../store/cart-slice";
+import { saveAppointment } from '../../store/appointment-slice';
+import { formatPrice } from "../../utils/formatPrice";
+
+import type { AppDispatch } from "../../store";
+import type { Appointment } from "../../types/appointment";
 
 const Cart = () => {
     const { items, totalPrice } = useSelector(
         (state: { cart: { items: CartItem[]; totalPrice: number } }) =>
             state.cart
     );
-    const dispatch = useDispatch();
+    const { authState } = useAuth();
+    const dispatch = useDispatch<AppDispatch>();
+
+    const startDateTime = Date.now();
 
     const handleBookNow = () => {
-        alert("Appointment booked!");
+        const treatmentIds: string[] =[];
+        const barberIds: string[] =[];
+        let duration = 0;
+        let totalPrice = 0;
+
+        items.forEach((item) => {
+            treatmentIds.push(item._id);
+            barberIds.push(item.barberIds[0]);
+            duration += item.duration;
+            totalPrice += item.price;
+        })
+
+        const appointment: Appointment = {
+            _id: '',
+            customerId: authState.userId,
+            barberIds,
+            treatmentIds,
+            startDateTime: new Date(startDateTime),
+            duration,
+            totalPrice,
+            approvalStatus: 'PENDING'
+        };
+
+        dispatch(saveAppointment({requestBody: appointment}));
+        
         dispatch(clearCart());
     };
 
