@@ -10,6 +10,7 @@ import BarbersPage from "./pages/Barbers";
 import BarberTreatmentsPage from "./pages/BarberTreatments";
 import ContactPage from "./pages/Contact";
 import NewPasswordPage from "./pages/NewPassword";
+import CartPage from "./pages/Cart";
 
 const router = createBrowserRouter([
     {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
                 path: "contact",
                 element: <ContactPage />,
             },
+            {
+                path: 'cart',
+                element: <CartPage/>
+            }
         ],
     },
 ]);
