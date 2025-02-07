@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import useAuth from "../contexts/auth/useAuth";
 import { Appointment } from "../types/appointment";
 
 const BASE_URL = 'http://localhost:8080';
@@ -53,13 +52,12 @@ export const getAppointmentsByUserId = createAsyncThunk<Appointment[], { _id: st
     }
 );
 
-export const updateAppointment = createAsyncThunk<Appointment, { _id: string, requestBody: Appointment }>(
+export const updateAppointment = createAsyncThunk<Appointment, { requestBody: Appointment, jwtToken: string }>(
     'appointments/updateAppointment',
-    async ({ _id, requestBody }, { rejectWithValue }) => {
-        const { authState } = useAuth();
-        const jwtToken = authState.jwtToken;
+    async ({ requestBody, jwtToken }, { rejectWithValue }) => {
+
         try {
-            const response = await fetch(`${BASE_URL}/appointments/${_id}`, {
+            const response = await fetch(`${BASE_URL}/appointments/${requestBody._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,7 +81,7 @@ export const updateAppointment = createAsyncThunk<Appointment, { _id: string, re
 
 export const deleteAppointment = createAsyncThunk<string, { _id: string, jwtToken: string }>(
     'appointments/deleteAppointment',
-    async ({_id, jwtToken}, { rejectWithValue }) => {
+    async ({ _id, jwtToken }, { rejectWithValue }) => {
         try {
             const response = await fetch(`${BASE_URL}/appointments/${_id}`, {
                 method: 'DELETE',

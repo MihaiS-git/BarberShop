@@ -9,6 +9,8 @@ router.get('/appointments/user/:userId', isAuth, AppointmentsController.getAppoi
 
 router.post('/appointments', isAuth, AppointmentsController.saveAppointment);
 
+router.put('/appointments/:appointmentId', isAuth, AppointmentsController.updateAppointment);
+
 router.delete('/appointments/:appointmentId', isAuth, AppointmentsController.deleteAppointmentById);
 
 export default router;

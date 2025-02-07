@@ -2,12 +2,11 @@ import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
 import CustomError from "../utils/custom-error";
 import Appointment, { IAppointment } from '../models/appointment';
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 import { ApprovalStatus } from "../models/approvalStatus";
 import User from '../models/user';
 import Treatment from '../models/treatment';
 import isBarberAvailable from '../utils/is-barber-available';
-import { log } from "console";
 
 class AppointmentsController {
     static async saveAppointment(req: Request, res: Response, next: NextFunction) {
@@ -73,11 +72,10 @@ class AppointmentsController {
             }
             console.log("Appointment saved successfully.");
             res.status(200).json(result);
-        } catch (error: any) {
-            const err = new CustomError(error.message || 'Internal Server Error', error.status || 500, error.data);
-            next(err);
+        } catch (error) {
+            next(error);
         }
-    }
+    };
 
     static async getAppointmentsByUserId(req: Request, res: Response, next: NextFunction) {
         const userId = req.params.userId;
@@ -86,23 +84,34 @@ class AppointmentsController {
             const appointmentIds = user!.appointmentIds;
             const appointments = appointmentIds && appointmentIds.length > 0 ? await Appointment.find({ _id: { $in: appointmentIds } }) : [];
             res.status(200).json(appointments);
-        } catch (error: any) {
-            const err = new CustomError(error.message || 'Appointments not found.', error.status || 404, error.data);
-            next(err);
+        } catch (error) {
+            next(error);
+        }
+    };
+
+    static async updateAppointment(req: Request, res: Response, next: NextFunction) {
+        try {
+            const updatedAppointment = await Appointment.findByIdAndUpdate(req.params.appointmentId, { startDateTime: new Date(req.body.startDateTime), approvalStatus: req.body.approvalStatus as ApprovalStatus });
+            if (!updatedAppointment) {
+                throw new CustomError('Appointment not found', 404);
+            }
+            res.status(200).json(updatedAppointment);
+        } catch (error) {
+            next(error);
         }
     }
 
     static async deleteAppointmentById(req: Request, res: Response, next: NextFunction) {
         const appointmentId = req.params.appointmentId;
-        
+
         try {
             const appointment = await Appointment.findById(appointmentId);
-            
+
             const userIds = [appointment?.customerId, ...(appointment?.barberIds || [])];
 
             await Promise.all(userIds.map(async (id) => {
                 const user = await User.findById(id);
-                if (user) {   
+                if (user) {
                     user.appointmentIds!.filter((id) => id.toString() !== appointmentId);
                     await user.save();
                 }
@@ -110,11 +119,10 @@ class AppointmentsController {
 
             const result = await Appointment.deleteOne(new mongoose.Types.ObjectId(appointmentId));
             res.status(200).json({ message: 'Appointment deleted successfully,' });
-        } catch (error: any) {
-            const err = new CustomError(error.message || 'Appointments not deleted.', error.status || 404, error.data);
-            next(err);
+        } catch (error) {
+            next(error);
         }
-    }
+    };
 }
 
 export default AppointmentsController;

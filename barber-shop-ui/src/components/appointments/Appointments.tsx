@@ -28,11 +28,11 @@ const Appointments = () => {
         );
 
     return (
-        <div className="flex flex-col justify-around align-middle text-center font-medium font-serif  text-yellow-950 text-2xl sm:text-3xl">
+        <div className="flex flex-col justify-around align-middle text-center font-medium font-serif  text-yellow-950 text-2xl sm:text-3xl w-12/12">
             <div className="bg-yellow-500 bg-opacity-60 mb-10 w-64 sm:w-96 mx-auto">
                 <h2>Appointments</h2>
             </div>
-            <div className="bg-yellow-400  text-yellow-950 lg:col-span-2 h-full flex flex-col justify-center items-center">
+            <div className="lg:col-span-2 flex flex-col justify-center items-center bg-yellow-400  text-yellow-950">
                     {appointments.length > 0 ? (
                         <ul className="w-11/12 sm:w-10/12 xl:w-8/12">
                             {appointments.map((item, index) => (
