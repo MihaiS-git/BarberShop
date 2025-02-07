@@ -15,13 +15,13 @@ const ItemCard: React.FC<{ item: CartItem }> = ({ item }) => {
     };
 
     return (
-        <div className="flex flex-row justify-between items-center text-center m-2 my-4 shadow-[2px_2px_6px] shadow-yellow-950 bg-yellow-900">
+        <div className="flex flex-row justify-between items-center text-center w-full mx-auto my-4 shadow-[2px_2px_6px] shadow-yellow-950 bg-yellow-900">
             <img
                 src={`/${item.pictureUrl}`}
                 alt={item.name}
                 className="w-15 h-15 lg:w-30 lg:h-30"
             />
-            <div className="flex flex-row justify-between w-full sm:mx-4 md:mx-12">
+            <div className="flex flex-row justify-between w-full mx-4">
                 <p className="font-semibold m-2 mb-2 text-yellow-400 text-sm md:text-md lg:text-xl">
                     {item.name}
                 </p>
@@ -31,7 +31,7 @@ const ItemCard: React.FC<{ item: CartItem }> = ({ item }) => {
             </div>
             <button
                 type="button"
-                className="bg-yellow-950 text-yellow-200 hover:bg-yellow-200 hover:text-yellow-950 w-5 h-5 md:w-10 md:h-10 text-xs md:text-base me-4 cursor-pointer"
+                className="bg-yellow-950 text-yellow-200 hover:bg-yellow-200 hover:text-yellow-950 w-7 h-7 text-xs p-1 md:text-base me-4 cursor-pointer"
                 onClick={handleRemoveFromCart}
             >
                 X

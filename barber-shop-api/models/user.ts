@@ -1,7 +1,7 @@
 import { Schema, model, Document, Types, ObjectId } from 'mongoose';
 import { Role } from './role';
 
-export interface IUser extends Document { 
+export interface IUser extends Document {
     _id: ObjectId;
     email: string;
     password: string;
@@ -10,6 +10,8 @@ export interface IUser extends Document {
     dob: Date;
     pictureUrl: string;
     treatmentIds?: Types.ObjectId[];
+    appointmentIds?: Types.ObjectId[];
+    notAvailable?: { start: Date, end: Date }[];
     resetToken: string;
     resetTokenExpiration: number;
 };
@@ -44,10 +46,20 @@ const userSchema = new Schema<IUser>({
     },
     treatmentIds: [
         {
-        type: Schema.Types.ObjectId,
-        ref: 'Treatment'
+            type: Schema.Types.ObjectId,
+            ref: 'Treatment'
         }
     ],
+    appointmentIds: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Appointment'
+        }
+    ],
+    notAvailable: [{
+        start: { type: Date },
+        end: {type: Date}
+    }],
     resetToken: {
         type: String,
         required: false,

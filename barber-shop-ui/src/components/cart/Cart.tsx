@@ -6,28 +6,41 @@ import { CartItem } from "../../types/cartItem";
 import ItemCard from "./ItemCard";
 
 import { clearCart } from "../../store/cart-slice";
-import { saveAppointment } from '../../store/appointment-slice';
+import { saveAppointment } from "../../store/appointment-slice";
 import { formatPrice } from "../../utils/formatPrice";
 
 import type { AppDispatch } from "../../store";
 import type { Appointment } from "../../types/appointment";
 import { ApprovalStatus } from "../../types/approvalStatus";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { format } from "date-fns";
 
 const Cart = () => {
+    const [dateAndTime, setDateAndTime] = useState(null);
     const { items, totalPrice } = useSelector(
         (state: { cart: { items: CartItem[]; totalPrice: number } }) =>
             state.cart
     );
-    const { authState } = useAuth();
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const { authState } = useAuth();
 
-    const startDateTime = Date.now();
+    const handleDatePicker = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDateAndTime(e.target.value);
+    };
+
+    const handleClearCart = () => {
+        dispatch(clearCart());
+    }
+
+    const handleClose = () => {
+        navigate('/home');
+    };
 
     const handleBookNow = () => {
-        console.log("handleBookNow called");
-        
-        const treatmentIds: string[] =[];
-        const barberIds: string[] =[];
+        const treatmentIds: string[] = [];
+        const barberIds: string[] = [];
         let duration = 0;
         let totalPrice = 0;
 
@@ -36,28 +49,28 @@ const Cart = () => {
             barberIds.push(item.barberIds[0]);
             duration += item.duration;
             totalPrice += item.price;
-        })
+        });
 
         const appointment: Appointment = {
-            _id: '',
+            _id: "",
             customerId: authState.userId,
             barberIds,
             treatmentIds,
-            startDateTime: new Date(startDateTime).toISOString(),
+            startDateTime: format(dateAndTime, "yyyy-MM-dd HH:mm:ss"),
             duration,
             totalPrice,
-            approvalStatus: ApprovalStatus.PENDING
+            approvalStatus: ApprovalStatus.PENDING,
         };
 
-        console.log("Appointment request body: ", appointment);
-        
+        dispatch(
+            saveAppointment({
+                requestBody: appointment,
+                jwtToken: authState.jwtToken,
+            })
+        );
 
-        dispatch(saveAppointment({ requestBody: appointment, jwtToken: authState.jwtToken }));
-        
-        console.log("after dispatch saveAppointment");
-        
-        
         dispatch(clearCart());
+        navigate('/home');
     };
 
     return (
@@ -69,7 +82,7 @@ const Cart = () => {
                 <div className="bg-yellow-400  text-yellow-950 lg:col-span-2 h-full flex flex-col justify-center items-center">
                     <h3 className="m-2 md:p-2 text-xl font-bold">Items</h3>
                     {items.length > 0 ? (
-                        <ul>
+                        <ul className="w-11/12 sm:w-10/12 xl:w-8/12">
                             {items.map((item, index) => (
                                 <li key={index}>
                                     <ItemCard item={item} />
@@ -84,29 +97,62 @@ const Cart = () => {
                         </div>
                     )}
                 </div>
-                <div className="bg-yellow-950  text-yellow-400 px-8 flex flex-col justify-center align-middle text-center">
-                    <h3 className="m-2 md:p-2 text-xl font-bold">Order Details</h3>
-                    <div className="flex flex-row align-middle justify-between md:py-2">
-                        <p>Services price:</p>
-                        <p>{formatPrice(totalPrice * 0.81)}</p>
+
+                <div>
+                    <div className="bg-yellow-700  text-yellow-400 p-4 flex flex-col justify-center align-middle text-center">
+                        <h3 className="md:p-2 text-xl font-bold">
+                            Pick a date
+                        </h3>
+                        <div className="flex flex-row align-middle justify-between">
+                            <input
+                                type="datetime-local"
+                                className="bg-yellow-50 text-yellow-950 w-4/5 mx-auto"
+                                name="dateAndTime"
+                                onChange={handleDatePicker}
+                                required
+                            />
+                        </div>
                     </div>
-                    <div className="flex flex-row align-middle justify-between md:py-2">
-                        <p>VAT:</p>
-                        <p>{formatPrice(totalPrice * 0.19)}</p>
-                    </div>
-                    <hr className="m-2" />
-                    <div className="flex flex-row align-middle justify-between md:py-2">
-                        <p className="font-bold md:text-xl">Total</p>
-                        <p className="font-bold md:text-xl">
-                            {formatPrice(totalPrice)}
-                        </p>
-                    </div>
-                    <div className="mx-auto mb-2 text-center">
+
+                    <div className="bg-yellow-950  text-yellow-400 px-8 py-4 flex flex-col justify-center align-middle text-center">
+                        <h3 className="m-2 md:p-2 text-xl font-bold">
+                            Order Details
+                        </h3>
+                        <div className="flex flex-row align-middle justify-between md:py-1">
+                            <p>Services:</p>
+                            <p>{formatPrice(totalPrice * 0.81)}</p>
+                        </div>
+                        <div className="flex flex-row align-middle justify-between md:py-1">
+                            <p>VAT:</p>
+                            <p>{formatPrice(totalPrice * 0.19)}</p>
+                        </div>
+                        <hr className="m-2" />
+                        <div className="flex flex-row align-middle justify-between md:py-1">
+                            <p className="font-bold md:text-xl">Total</p>
+                            <p className="font-bold md:text-xl">
+                                {formatPrice(totalPrice)}
+                            </p>
+                        </div>
+                        <div className="mx-auto my-2 text-center grid grid-cols-2">
+                            <button
+                                className="mx-2 p-1 bg-yellow-400 hover:bg-yellow-900 text-yellow-900 hover:text-yellow-400 text-lg cursor-pointer"
+                                onClick={handleBookNow}
+                            >
+                                Book Now
+                            </button>
+                            <button
+                                className="mx-2 p-1 bg-yellow-400 hover:bg-yellow-900 text-yellow-900 hover:text-yellow-400 text-lg cursor-pointer"
+                                onClick={handleClearCart}
+                            >
+                                Delete
+                            </button>
+                        </div>
                         <button
-                            className="p-2 bg-yellow-400 hover:bg-yellow-900 text-yellow-900 hover:text-yellow-400 text-lg cursor-pointer"
-                            onClick={handleBookNow}
+                            type="button"
+                            className="p-1 w-7 h-7 bg-yellow-400 hover:bg-yellow-900 text-yellow-900 hover:text-yellow-400 text-sm cursor-pointer"
+                            onClick={handleClose}
                         >
-                            Book Now
+                            X
                         </button>
                     </div>
                 </div>

@@ -6,13 +6,10 @@ import mongoose from "mongoose";
 import { ApprovalStatus } from "../models/approvalStatus";
 import User from '../models/user';
 import Treatment from '../models/treatment';
+import isBarberAvailable from '../utils/is-barber-available';
 
 class AppointmentsController {
     static async saveAppointment(req: Request, res: Response, next: NextFunction) {
-        console.log("saveAppointment controller called");
-        console.log("REQUEST BODY: ", req.body);
-        console.log("REQUEST HEADERS: ", req.headers);
-
         try {
             if (!req.body) {
                 throw new CustomError("Appointment data is missing", 400);
@@ -44,6 +41,10 @@ class AppointmentsController {
             const normalizedStatus = approvalStatus.toLowerCase();
             if (!Object.values(ApprovalStatus).includes(normalizedStatus as ApprovalStatus)) {
                 throw new CustomError(`Invalid approvalStatus: ${approvalStatus}`, 400);
+            }
+
+            if (!isBarberAvailable(barberIds, startDateTime)) {
+                throw new CustomError('Picked date and time are not valid.', 400);
             }
 
             const appointment = new Appointment({

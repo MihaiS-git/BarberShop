@@ -9,4 +9,8 @@ export interface User{
     dob: Date;
     pictureUrl?: string;
     treatmentIds?: string[]; 
+    appointmentIds?: string[];
+    notAvailable?: { start: Date, end: Date }[];
+    resetToken?: string;
+    resetTokenExpiration?: number;
 }

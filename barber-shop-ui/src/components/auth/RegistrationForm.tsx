@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import FormInputElement from "./FormInputElement";
 import { validateAge } from "../../utils/validateAge";
+import { format } from "date-fns";
 
 const BASE_URL = "http://localhost:8080";
 
@@ -133,7 +134,7 @@ const RegistrationForm = () => {
             email: email,
             password: password,
             name: name,
-            dob: dob.toLocaleDateString('en-GB'),
+            dob: format(dob, "yyyy-MM-dd HH:mm:ss")
         };
         console.log(requestBody);
 

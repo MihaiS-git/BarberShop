@@ -27,10 +27,7 @@ class AuthController {
         const password = req.body.password;
         const name = req.body.name;
         const role = Role.CUSTOMER;
-
-        const dobString = req.body.dob;
-        const [day, month, year] = dobString.split('/').map(Number);
-        const dob = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
+        const dob = req.body.dob;
 
         try {
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -55,15 +52,16 @@ class AuthController {
         try {
             const user = await User.findOne({ email: email });
             if (!user) {
-                const error = new CustomError('User not found', 404);
+                const error = new CustomError('User not found.', 404);
                 return next(error);
             }
             loadedUser = user!;
             const isEqual = await bcrypt.compare(password, user!.password);
             if (!isEqual) {
-                const error = new CustomError('Wrong password', 401);
+                const error = new CustomError('Wrong password.', 401);
                 return next(error);
             }
+
             const token = jwt.sign({
                 email: loadedUser!.email,
                 userId: loadedUser._id!.toString(),
@@ -72,6 +70,7 @@ class AuthController {
                 JWT_SECRET!,
                 { expiresIn: '1h' }
             );
+
             res.status(200).json({ userId: loadedUser._id!.toString(), jwtToken: token, role: loadedUser.role });
         } catch (error: any) {
             const err = new CustomError(error.message || 'Internal server error', error.status || 500, error.data)
