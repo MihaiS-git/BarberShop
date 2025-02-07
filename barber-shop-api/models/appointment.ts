@@ -1,11 +1,11 @@
-import { model, Schema, ObjectId } from "mongoose";
+import { model, Schema, ObjectId, Types } from "mongoose";
 import { ApprovalStatus } from "./approvalStatus";
 
 export interface IAppointment {
-    _id: ObjectId;
-    customerId: ObjectId;
-    barberIds: ObjectId[];
-    treatmentIds: ObjectId[];
+    _id: Types.ObjectId;
+    customerId: Types.ObjectId;
+    barberIds: Types.ObjectId[];
+    treatmentIds: Types.ObjectId[];
     startDateTime: Date;
     duration: number;
     totalPrice: number;

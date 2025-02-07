@@ -2,7 +2,7 @@ import { Schema, model, Document, Types, ObjectId } from 'mongoose';
 import { Role } from './role';
 
 export interface IUser extends Document {
-    _id: ObjectId;
+    _id: Types.ObjectId;
     email: string;
     password: string;
     name: string;

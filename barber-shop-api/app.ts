@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import seedData from './scripts/seed';
 import authRoutes from './routes/auth';
@@ -9,23 +10,24 @@ import treatmentsRoutes from './routes/treatments';
 import usersRoutes from './routes/users';
 import appointmentsRoutes from './routes/appointments';
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
-const PORT = process.env.PORT;;
-
 dotenv.config();
+
+const MONGODB_URI = process.env.MONGODB_URI as string;
+const PORT = process.env.PORT;
 
 const app = express();
 
+const allowedOrigins = ['http://localhost:5173']; // Add production domains later
+
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // Allow cookies or authentication headers
+}));
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
 
 app.use('/auth', authRoutes);
 app.use(treatmentsRoutes);
@@ -42,10 +44,15 @@ app.use((error: any, req: any, res: any, next: any) => {
 mongoose.connect(MONGODB_URI)
     .then(async () => {
         console.log("Connected to MongoDB...");
-        await seedData();
+        try {
+            await seedData();
+            console.log("Database seeded successfully.");
+        } catch (error) {
+            console.error("Seeding failed: ", error);
+        }
         app.listen(PORT, () => {
             console.log(`Server running on port ${PORT}`);
         });
-    }).catch((err) => {
-        console.log(err);
+    }).catch((error) => {
+        console.error("Database connection failed: ", error);
     });

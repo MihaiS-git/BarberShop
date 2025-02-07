@@ -11,6 +11,7 @@ import BarberTreatmentsPage from "./pages/BarberTreatments";
 import ContactPage from "./pages/Contact";
 import NewPasswordPage from "./pages/NewPassword";
 import CartPage from "./pages/Cart";
+import AppointmentsPage from "./pages/Appointments";
 
 const router = createBrowserRouter([
     {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
             {
                 path: 'cart',
                 element: <CartPage/>
+            },
+            {
+                path: 'appointments',
+                element: <AppointmentsPage/>
             }
         ],
     },

@@ -4,9 +4,9 @@ import { Appointment } from "../types/appointment";
 
 const BASE_URL = 'http://localhost:8080';
 
-export const saveAppointment = createAsyncThunk < Appointment, { requestBody: Appointment, jwtToken: string }>(
+export const saveAppointment = createAsyncThunk<Appointment, { requestBody: Appointment, jwtToken: string }>(
     'appointments/saveAppointment',
-    async ({requestBody, jwtToken}, { rejectWithValue }) => {
+    async ({ requestBody, jwtToken }, { rejectWithValue }) => {
         try {
             const response = await fetch(`${BASE_URL}/appointments`, {
                 method: 'POST',
@@ -30,38 +30,11 @@ export const saveAppointment = createAsyncThunk < Appointment, { requestBody: Ap
     }
 );
 
-export const getAppointmentsByCustomerId = createAsyncThunk<Appointment[], string>(
-    'appointments/getAppointmentsByCustomerId',
-    async (_id, { rejectWithValue }) => {
-        const { authState } = useAuth();
-        const jwtToken = authState.jwtToken;
+export const getAppointmentsByUserId = createAsyncThunk<Appointment[], { _id: string, jwtToken: string }>(
+    'appointments/getAppointmentsByUserId',
+    async ({ _id, jwtToken }, { rejectWithValue }) => {
         try {
-            const response = await fetch(`${BASE_URL}/appointments/customer/${_id}`, {
-                headers: {
-                    'Authorization': `Bearer ${jwtToken}`
-                }
-            });
-            if (!response.ok) {
-                const errorMessage = response.status === 404
-                    ? "Appointments not found."
-                    : "Something went wrong. Please try again.";
-                return rejectWithValue(errorMessage);
-            }
-            const data = await response.json();
-            return data;
-        } catch (error) {
-            return rejectWithValue(error.message);
-        }
-    }
-);
-
-export const getAppointmentsByBarberId = createAsyncThunk<Appointment[], string>(
-    'appointments/getAppointmentsByBarberId',
-    async (_id, { rejectWithValue }) => {
-        const { authState } = useAuth();
-        const jwtToken = authState.jwtToken;
-        try {
-            const response = await fetch(`${BASE_URL}/appointments/barber/${_id}`, {
+            const response = await fetch(`${BASE_URL}/appointments/user/${_id}`, {
                 headers: {
                     'Authorization': `Bearer ${jwtToken}`
                 }
@@ -108,16 +81,13 @@ export const updateAppointment = createAsyncThunk<Appointment, { _id: string, re
     }
 );
 
-export const deleteAppointment = createAsyncThunk<string, string>(
+export const deleteAppointment = createAsyncThunk<string, { _id: string, jwtToken: string }>(
     'appointments/deleteAppointment',
-    async (_id, { rejectWithValue }) => {
-        const { authState } = useAuth();
-        const jwtToken = authState.jwtToken;
+    async ({_id, jwtToken}, { rejectWithValue }) => {
         try {
             const response = await fetch(`${BASE_URL}/appointments/${_id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${jwtToken}`
                 }
             });
@@ -162,27 +132,15 @@ const appointmentSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-            .addCase(getAppointmentsByCustomerId.pending, (status) => {
+            .addCase(getAppointmentsByUserId.pending, (status) => {
                 status.loading = true;
                 status.error = null;
             })
-            .addCase(getAppointmentsByCustomerId.fulfilled, (status, action) => {
+            .addCase(getAppointmentsByUserId.fulfilled, (status, action) => {
                 status.appointments = action.payload;
                 status.loading = false;
             })
-            .addCase(getAppointmentsByCustomerId.rejected, (status, action) => {
-                status.loading = false;
-                status.error = action.payload;
-            })
-            .addCase(getAppointmentsByBarberId.pending, (status) => {
-                status.loading = true;
-                status.error = null;
-            })
-            .addCase(getAppointmentsByBarberId.fulfilled, (status, action) => {
-                status.appointments = action.payload;
-                status.loading = false;
-            })
-            .addCase(getAppointmentsByBarberId.rejected, (status, action) => {
+            .addCase(getAppointmentsByUserId.rejected, (status, action) => {
                 status.loading = false;
                 status.error = action.payload;
             })
