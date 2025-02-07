@@ -7,6 +7,7 @@ import seedData from './scripts/seed';
 import authRoutes from './routes/auth';
 import treatmentsRoutes from './routes/treatments';
 import usersRoutes from './routes/users';
+import appointmentsRoutes from './routes/appointments';
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 const PORT = process.env.PORT;;
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 app.use('/auth', authRoutes);
 app.use(treatmentsRoutes);
 app.use(usersRoutes);
+app.use(appointmentsRoutes);
 
 app.use((error: any, req: any, res: any, next: any) => {
     const status = error.statusCode || 500;

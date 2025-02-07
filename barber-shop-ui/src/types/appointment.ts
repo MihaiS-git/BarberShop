@@ -1,10 +1,12 @@
+import { ApprovalStatus } from "./approvalStatus";
+
 export interface Appointment{
     _id: string;
     customerId: string;
     barberIds: string[];
     treatmentIds: string[];
-    startDateTime: Date;
+    startDateTime: string;
     duration: number;
     totalPrice: number;
-    approvalStatus: "APPROVED" | "PENDING" | "REJECTED";
+    approvalStatus: ApprovalStatus;
 }

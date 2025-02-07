@@ -4,11 +4,12 @@ import { Appointment } from "../types/appointment";
 
 const BASE_URL = 'http://localhost:8080';
 
-export const saveAppointment = createAsyncThunk<Appointment, { requestBody: Appointment }>(
+export const saveAppointment = createAsyncThunk < Appointment, { requestBody: Appointment, jwtToken: string }>(
     'appointments/saveAppointment',
-    async (requestBody, { rejectWithValue }) => {
-        const { authState } = useAuth();
-        const jwtToken = authState.jwtToken;
+    async ({requestBody, jwtToken}, { rejectWithValue }) => {
+
+        console.log("saveAppointment AsyncThunk called");
+        
         try {
             const response = await fetch(`${BASE_URL}/appointments`, {
                 method: 'POST',
@@ -29,6 +30,8 @@ export const saveAppointment = createAsyncThunk<Appointment, { requestBody: Appo
             const data = await response.json();
             return data;
         } catch (error) {
+            console.log("ERROR: ", error);
+            
             return rejectWithValue(error.message);
         }
     }
@@ -155,14 +158,20 @@ const appointmentSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(saveAppointment.pending, (state) => {
+                console.log("saveAppointment.pending reducer called");
+                
                 state.loading = true;
                 state.error = null;
             })
             .addCase(saveAppointment.fulfilled, (state, action) => {
+                console.log("saveAppointment.fulfilled reducer called");
+
                 state.appointments.push(action.payload);
                 state.loading = false;
             })
             .addCase(saveAppointment.rejected, (state, action) => {
+                console.log("saveAppointment.rejected reducer called");
+
                 state.loading = false;
                 state.error = action.payload;
             })

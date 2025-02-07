@@ -3,12 +3,17 @@ import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import dotenv from 'dotenv';
 
 import User, { IUser } from '../models/user';
 import { Role } from '../models/role';
 import CustomError from '../utils/custom-error';
 
 import { sendResetPasswordEmail } from '../utils/email';
+
+dotenv.config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
 
 class AuthController {
 
@@ -64,7 +69,7 @@ class AuthController {
                 userId: loadedUser._id!.toString(),
                 role: loadedUser.role
             },
-                'secret',
+                JWT_SECRET!,
                 { expiresIn: '1h' }
             );
             res.status(200).json({ userId: loadedUser._id!.toString(), jwtToken: token, role: loadedUser.role });

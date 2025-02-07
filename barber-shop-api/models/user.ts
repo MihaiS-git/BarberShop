@@ -30,8 +30,8 @@ const userSchema = new Schema<IUser>({
     },
     role: {
         type: String,
-        required: true,
-        enum: Object.values(Role)
+        enum: Object.values(Role),
+        required: true
     },
     dob: {
         type: Date,

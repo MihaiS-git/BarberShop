@@ -11,6 +11,7 @@ import { formatPrice } from "../../utils/formatPrice";
 
 import type { AppDispatch } from "../../store";
 import type { Appointment } from "../../types/appointment";
+import { ApprovalStatus } from "../../types/approvalStatus";
 
 const Cart = () => {
     const { items, totalPrice } = useSelector(
@@ -23,6 +24,8 @@ const Cart = () => {
     const startDateTime = Date.now();
 
     const handleBookNow = () => {
+        console.log("handleBookNow called");
+        
         const treatmentIds: string[] =[];
         const barberIds: string[] =[];
         let duration = 0;
@@ -40,13 +43,19 @@ const Cart = () => {
             customerId: authState.userId,
             barberIds,
             treatmentIds,
-            startDateTime: new Date(startDateTime),
+            startDateTime: new Date(startDateTime).toISOString(),
             duration,
             totalPrice,
-            approvalStatus: 'PENDING'
+            approvalStatus: ApprovalStatus.PENDING
         };
 
-        dispatch(saveAppointment({requestBody: appointment}));
+        console.log("Appointment request body: ", appointment);
+        
+
+        dispatch(saveAppointment({ requestBody: appointment, jwtToken: authState.jwtToken }));
+        
+        console.log("after dispatch saveAppointment");
+        
         
         dispatch(clearCart());
     };
