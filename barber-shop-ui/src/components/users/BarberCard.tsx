@@ -18,7 +18,7 @@ const BarberCard: React.FC<{ user: User }> = ({ user }) => {
             <img
                 src={user.pictureUrl}
                 alt={user.name}
-                className="w-full object-cover rounded-t-lg"
+                className="w-full object-cover"
             />
             <h3 className="font-semibold m-2 text-yellow-400 text-sm  md:text-md lg:text-lg">
                 {user.name}

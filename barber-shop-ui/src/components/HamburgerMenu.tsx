@@ -37,6 +37,7 @@ const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = 
                             name="Appointments"
                             className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
                             target="/appointments"
+                            onClick={handleClose}
                         />
                     )}
                     {authState.isAuthenticated && (
@@ -51,7 +52,7 @@ const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = 
                         <MenuElement
                             name="Account"
                             className="block w-full p-2 text-center text-lg font-bold text-yellow-900 hover:text-stone-950"
-                            target="/myAccount"
+                            target="/account"
                             onClick={handleClose}
                         />
                     )}

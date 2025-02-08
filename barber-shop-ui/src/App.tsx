@@ -12,6 +12,7 @@ import ContactPage from "./pages/Contact";
 import NewPasswordPage from "./pages/NewPassword";
 import CartPage from "./pages/Cart";
 import AppointmentsPage from "./pages/Appointments";
+import AccountPage from "./pages/Account";
 
 const router = createBrowserRouter([
     {
@@ -65,6 +66,10 @@ const router = createBrowserRouter([
             {
                 path: 'appointments',
                 element: <AppointmentsPage/>
+            },
+            {
+                path: 'account',
+                element: <AccountPage/>
             }
         ],
     },

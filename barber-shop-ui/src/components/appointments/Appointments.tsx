@@ -22,7 +22,7 @@ const Appointments = () => {
     if (loading) return <div>Loading...</div>;
     if (error)
         return (
-            <div className="bg-slate-400 rounded-lg p-2 text-fuchsia-600 text-center font-bold text-lg mb-4">
+            <div className="bg-yellow-400 rounded-lg p-2 text-yellow-950 text-center font-bold text-lg mb-4">
                 {error}
             </div>
         );
