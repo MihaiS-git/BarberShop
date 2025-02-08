@@ -1,12 +1,12 @@
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useAuth from "../../contexts/auth/useAuth";
+import { useNavigate } from "react-router-dom";
 import { AppDispatch } from "../../store";
 import { RootState } from "../../store";
-import { getAccount, updateAccount } from "../../store/account-slice";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import useAuth from "../../contexts/auth/useAuth";
 import { User } from "../../types/user";
 import { useTreatments } from "../../hooks/useTreatments";
+import { getAccount, updateAccount } from "../../store/account-slice";
 
 const AccountForm = () => {
     const { user, loading, error } = useSelector(
@@ -54,13 +54,15 @@ const AccountForm = () => {
     if (treatmentsError)
         return <div>Failed to load treatments: {treatmentsError.message}</div>;
 
-    const barberTreatments = treatments.filter((treatment) =>
-        user.treatmentIds.includes(treatment._id)
-    );
     const barberTreatmentNames: string[] = [];
-    barberTreatments.forEach((treatment) =>
-        barberTreatmentNames.push(treatment.name)
-    );
+    if (user.role === 'barber' && treatments) {
+        const barberTreatments = treatments.filter((treatment) =>
+            user.treatmentIds.includes(treatment._id)
+        );
+        barberTreatments.forEach((treatment) =>
+            barberTreatmentNames.push(treatment.name)
+        );
+    }
 
     const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
@@ -99,7 +101,7 @@ const AccountForm = () => {
                     />
                 </p>
                 <form method="PUT" onSubmit={handleSubmit}>
-                    <div className="flex flex-row text-yellow-950 mx-4 mt-8 p-1 lg:mx-4 text-xs lg:text-sm">
+                    <div className="flex flex-row text-yellow-950 mx-4 p-1 lg:mx-4 text-xs lg:text-sm">
                         <p className="mx-4 font-bold">E-mail:</p>
                         <p className="mx-4">{user.email}</p>
                     </div>
