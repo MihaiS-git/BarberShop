@@ -4,6 +4,8 @@
   "description": "barber shop api",
   "main": "app.js",
   "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
     "test": "test"
   },
   "repository": {
