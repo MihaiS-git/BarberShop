@@ -153,7 +153,7 @@ const RegistrationForm = () => {
                 setErrors([{ field: "general", message: data.message }]);
                 return;
             }
-            navigate("#/login");
+            navigate("/login");
         } catch (error) {
             if (error instanceof Error) {
                 setErrors([

@@ -27,7 +27,7 @@ const Treatments: React.FC = () => {
         !barberTreatments ||
         barberTreatments.length === 0
     ) {
-        navigate("#/error");
+        navigate("/error");
     }
 
     return (

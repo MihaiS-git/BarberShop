@@ -85,7 +85,7 @@ const AccountForm = () => {
     };
 
     const handleClose = () => {
-        navigate("/home");
+        navigate("/");
     };
 
     const formattedDob = dob ? new Date(dob).toISOString().slice(0, 10) : "";

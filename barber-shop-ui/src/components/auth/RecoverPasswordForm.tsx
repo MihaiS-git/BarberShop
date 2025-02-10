@@ -58,7 +58,7 @@ const RecoverPasswordForm = () => {
                 return;
             }
             alert('Please verify your email!');
-            navigate("#/login");
+            navigate("/login");
         } catch (error) {
             if (error instanceof Error) {
                 setErrors([
