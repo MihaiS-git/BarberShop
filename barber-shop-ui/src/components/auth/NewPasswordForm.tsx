@@ -106,7 +106,7 @@ const NewPasswordForm = () => {
                 return;
             }
             alert('Password changed successfully!');
-            navigate("/login");
+            navigate("#/login");
         } catch (error) {
             if (error instanceof Error) {
                 setErrors([

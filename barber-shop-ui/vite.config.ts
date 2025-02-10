@@ -20,6 +20,5 @@ export default defineConfig({
       },
       plugins: [visualizer({ open: true })], // Opens a visual report in the browser
     },
-  },
-  base: "/"
+  }
 });

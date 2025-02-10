@@ -7,7 +7,7 @@ const BarberCard: React.FC<{ user: User }> = ({ user }) => {
     const formattedDob = new Date(user.dob).toISOString().split('T')[0];
 
     const handleClick = () => {
-        navigate(`/treatments/${user?._id!.toString()}`);
+        navigate(`#/treatments/${user?._id!.toString()}`);
     }
 
     return (

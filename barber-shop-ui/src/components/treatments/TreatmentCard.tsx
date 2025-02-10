@@ -17,10 +17,10 @@ const TreatmentCard: React.FC<{ treatment: Treatment }> = ({ treatment }) => {
     const handleAddToCart = () => {
         if (authState.isAuthenticated) {
             dispatch(addToCart(treatment));
-            navigate("/cart");
+            navigate("#/cart");
         } else {
             alert("Sorry! You must be authenticated!");
-            navigate("/login");
+            navigate("#/login");
         }
     };
 

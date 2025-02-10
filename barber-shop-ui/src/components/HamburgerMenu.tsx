@@ -9,7 +9,7 @@ const HamburgerMenu: React.FC<{openState: boolean; handleClose: () => void;}> = 
 
     const handleLogout = () => {
         logout();
-        navigate("/login");
+        navigate("#/login");
         handleClose();
     };
 

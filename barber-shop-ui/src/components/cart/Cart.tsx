@@ -34,7 +34,7 @@ const Cart = () => {
     };
 
     const handleClose = () => {
-        navigate("/home");
+        navigate("#/home");
     };
 
     const handleBookNow = () => {
@@ -72,7 +72,7 @@ const Cart = () => {
         );
 
         dispatch(clearCart());
-        navigate("/home");
+        navigate("#/home");
     };
 
     return (

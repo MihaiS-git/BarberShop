@@ -9,7 +9,7 @@ const MainNavigation = () => {
 
     const handleLogout = () => {
         logout();
-        navigate("/login");
+        navigate("#/login");
     };
 
     return (

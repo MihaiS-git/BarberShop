@@ -82,7 +82,7 @@ const AuthForm = () => {
                 return;
             }
             login(data.userId, data.jwtToken, data.role);
-            navigate("/home");
+            navigate("#/home");
         } catch (error) {
             if (error instanceof Error) {
                 setErrors([
