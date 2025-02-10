@@ -61,7 +61,7 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
 
 export const sendResetPasswordEmail = async (email: string, token: string) => {
     try {
-        const resetLink = `${FRONTEND_URL}/recover-password/${token}`;
+        const resetLink = `#/${FRONTEND_URL}/recover-password/${token}`;
         const emailContent = `
         <p>You requested a password reset</p>
         <p>Click this <a href="${resetLink}">link</a> to set a new password.</p>
