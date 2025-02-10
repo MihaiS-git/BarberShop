@@ -3,9 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import FormInputElement from "./FormInputElement";
 import { validateAge } from "../../utils/validateAge";
-import { format } from "date-fns";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const RegistrationForm = () => {
     const [email, setEmail] = useState<string>("");
@@ -134,7 +133,7 @@ const RegistrationForm = () => {
             email: email,
             password: password,
             name: name,
-            dob: format(dob, "yyyy-MM-dd HH:mm:ss")
+            dob: new Date(dob).toISOString().replace("T", " ").slice(0, 10)
         };
         console.log(requestBody);
 

@@ -2,7 +2,7 @@ import { Form, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import FormInputElement from "./FormInputElement";
 
-const BASE_URL = "http://localhost:8080";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const RecoverPasswordForm = () => {
     const [email, setEmail] = useState<string>("");

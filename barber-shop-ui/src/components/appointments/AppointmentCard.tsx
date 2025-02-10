@@ -38,8 +38,6 @@ const AppointmentCard: React.FC<{ appointment: Appointment }> = ({
 
     const handleUpdateAppointment = () => {
         const requestBody = { ...appointment, startDateTime, approvalStatus: approvalStatus as ApprovalStatus };
-        console.log("requestBody: ", requestBody);
-        
         dispatch(updateAppointment({ requestBody, jwtToken }));
         alert("Appointment updated successfully!");
     };

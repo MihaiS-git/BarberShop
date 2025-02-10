@@ -7,7 +7,6 @@ class TreatmentsController {
     static async getTreatments(req: Request, res: Response, next: NextFunction) { 
         try {
             const treatments = await Treatment.find();
-            /* res.status(200).json({ message: 'Treatments fetched successfully.', treatments: treatments }); */
             res.status(200).json(treatments);
         } catch (error: any) {
             const err = new CustomError(error.message || 'Failed to fetch treatments.', error.status || 404, error.data);

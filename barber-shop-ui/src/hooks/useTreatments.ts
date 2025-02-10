@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { Treatment } from "../types/treatment";
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const fetchTreatments = async (): Promise<Treatment[]> => {
     const res = await fetch(`${BASE_URL}/treatments`);

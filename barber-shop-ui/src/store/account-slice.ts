@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { User } from "../types/user";
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const getAccount = createAsyncThunk<User, {_id: string, jwtToken: string}>(
     'account/getAccount',
@@ -38,7 +38,6 @@ export const updateAccount = createAsyncThunk<User, { _id: string, user: User, j
                 },
                 body: JSON.stringify(user)
             });
-            console.log("RESPONSE: ", response);
             
             if (!response.ok) {
                 const errorMessage = response.status === 404

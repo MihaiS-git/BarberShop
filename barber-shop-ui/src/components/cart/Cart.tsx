@@ -14,7 +14,6 @@ import type { Appointment } from "../../types/appointment";
 import { ApprovalStatus } from "../../types/approvalStatus";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { format } from "date-fns";
 
 const Cart = () => {
     const [dateAndTime, setDateAndTime] = useState(null);
@@ -56,7 +55,7 @@ const Cart = () => {
             customerId: authState.userId,
             barberIds,
             treatmentIds,
-            startDateTime: format(dateAndTime, "yyyy-MM-dd HH:mm:ss"),
+            startDateTime: new Date(dateAndTime).toISOString().replace('T',' ').slice(0, 19),
             duration,
             totalPrice,
             approvalStatus: ApprovalStatus.PENDING,

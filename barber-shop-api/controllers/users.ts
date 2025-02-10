@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import User from '../models/user';
 import CustomError from "../utils/custom-error";
-import mongoose from "mongoose";
 
 class UsersController {
 
@@ -36,8 +35,6 @@ class UsersController {
         
         try {
             const result = await User.findByIdAndUpdate(userId, updateUser, {new: true});
-            console.log("RESULT: ", result);
-            
             if (!result) {
                 throw new CustomError("Account not found.", 404);
             }

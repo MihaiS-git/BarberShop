@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { User } from '../types/user';
 
-const BASE_URL = 'http://localhost:8080';
+const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const fetchBarbers = async (): Promise<User[]> => {
     const res = await fetch(`${BASE_URL}/barbers`);

@@ -70,7 +70,6 @@ class AppointmentsController {
                     }
                 }));
             }
-            console.log("Appointment saved successfully.");
             res.status(200).json(result);
         } catch (error) {
             next(error);
