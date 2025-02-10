@@ -31,10 +31,10 @@ const Cart = () => {
 
     const handleClearCart = () => {
         dispatch(clearCart());
-    }
+    };
 
     const handleClose = () => {
-        navigate('/home');
+        navigate("/home");
     };
 
     const handleBookNow = () => {
@@ -55,7 +55,10 @@ const Cart = () => {
             customerId: authState.userId,
             barberIds,
             treatmentIds,
-            startDateTime: new Date(dateAndTime).toISOString().replace('T',' ').slice(0, 19),
+            startDateTime: new Date(dateAndTime)
+                .toISOString()
+                .replace("T", " ")
+                .slice(0, 19),
             duration,
             totalPrice,
             approvalStatus: ApprovalStatus.PENDING,
@@ -69,7 +72,7 @@ const Cart = () => {
         );
 
         dispatch(clearCart());
-        navigate('/home');
+        navigate("/home");
     };
 
     return (
@@ -146,13 +149,15 @@ const Cart = () => {
                                 Delete
                             </button>
                         </div>
-                        <button
-                            type="button"
-                            className="p-1 w-7 h-7 bg-yellow-400 hover:bg-yellow-900 text-yellow-900 hover:text-yellow-400 text-sm cursor-pointer"
-                            onClick={handleClose}
-                        >
-                            X
-                        </button>
+                        <div className="flex flex-col justify-end items-end align-bottom">
+                            <button
+                                type="button"
+                                className="p-1 w-7 h-7 bg-yellow-400 hover:bg-yellow-900 text-yellow-900 hover:text-yellow-400 text-sm cursor-pointer"
+                                onClick={handleClose}
+                            >
+                                X
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
