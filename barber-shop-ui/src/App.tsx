@@ -13,6 +13,7 @@ import NewPasswordPage from "./pages/NewPassword";
 import CartPage from "./pages/Cart";
 import AppointmentsPage from "./pages/Appointments";
 import AccountPage from "./pages/Account";
+import ErrorPage from "./pages/Error";
 
 const router = createBrowserRouter([
     {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
             {
                 path: 'account',
                 element: <AccountPage/>
+            },
+            {
+                path: '*',
+                element: <ErrorPage/>
             }
         ],
     },
