@@ -11,6 +11,7 @@ const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const OAUTH_PLAYGROUND = 'https://developers.google.com/oauthplayground';
 const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
 const USER_EMAIL = process.env.USER_EMAIL;
+const FRONTEND_URL = process.env.FRONTEND_URL;
 
 const OAuth2 = google.auth.OAuth2;
 const oauth2Client = new OAuth2(
@@ -60,7 +61,7 @@ export const sendEmail = async (to: string, subject: string, html: string) => {
 
 export const sendResetPasswordEmail = async (email: string, token: string) => {
     try {
-        const resetLink = `http://localhost:5173/recover-password/${token}`;
+        const resetLink = `${FRONTEND_URL}/recover-password/${token}`;
         const emailContent = `
         <p>You requested a password reset</p>
         <p>Click this <a href="${resetLink}">link</a> to set a new password.</p>

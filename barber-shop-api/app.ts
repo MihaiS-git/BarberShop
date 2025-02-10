@@ -20,7 +20,7 @@ const PORT = process.env.PORT;
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:5173', FRONTEND_URL].filter(origin => origin !== undefined) as string[];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', FRONTEND_URL].filter(origin => origin !== undefined) as string[];
 
 app.use(cors({
     origin: allowedOrigins,
