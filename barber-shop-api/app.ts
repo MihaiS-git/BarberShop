@@ -14,12 +14,13 @@ import compression from 'compression';
 
 dotenv.config();
 
+const FRONTEND_URL = process.env.FRONTEND_URL;
 const MONGODB_URI = process.env.MONGODB_URI as string;
 const PORT = process.env.PORT;
 
 const app = express();
 
-const allowedOrigins = ['http://localhost:5173']; // Add production domains later
+const allowedOrigins = ['http://localhost:5173', FRONTEND_URL].filter(origin => origin !== undefined) as string[];
 
 app.use(cors({
     origin: allowedOrigins,
