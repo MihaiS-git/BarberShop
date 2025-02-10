@@ -4,7 +4,7 @@ import FormInputElement from "./FormInputElement";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-const RecoverPasswordForm = () => {
+const NewPasswordForm = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -201,4 +201,4 @@ const RecoverPasswordForm = () => {
     );
 };
 
-export default RecoverPasswordForm;
+export default NewPasswordForm;
